@@ -510,8 +510,8 @@
     <div class="info-box">
       <strong>Expected CSV format</strong>
       Row 1 (header): <code>Wavelength_(nm);380;385;390;…;780</code><br>
-      Data rows: <code>sample_name;val1;val2;…;val81</code> — one spectrum per row.<br>
-      Any row whose first column does NOT start with <code>DO_</code> is ignored.
+      Data rows: <code>Sample_name;val1;val2;…;val81</code> — one spectrum per row.<br>
+      Any row with an empty first column is ignored.
     </div>
   </div>
 
@@ -653,9 +653,6 @@ const z_bar_10 = [
 ];
 
 // ── CRITICAL: trim all CIE arrays to exactly 81 values (380–780 nm, Δλ=5) ──
-// The source data contains 113 values; only the first 81 correspond to the
-// 380–780 nm range used by the OIV standard. Using more would produce NaN
-// because the DO input spectra have exactly 81 wavelength points.
 const N_WL = 81;
 S_D65.splice(N_WL);
 x_bar_10.splice(N_WL);
@@ -682,21 +679,14 @@ function dot(a, b) {
   return s;
 }
 
-/**
- * DO → Transmittance (%)
- * Applies dilution correction then normalises to 10 mm path length.
- */
 function DO_to_T(DO_arr, path_mm, dilution) {
   return DO_arr.map(do_val => {
-    const do_corr  = do_val * dilution;           // dilution correction
-    const do_10mm  = do_corr * (10.0 / path_mm);  // path normalisation
-    return Math.pow(10, -do_10mm) * 100.0;         // Beer-Lambert → T%
+    const do_corr  = do_val * dilution;
+    const do_10mm  = do_corr * (10.0 / path_mm);
+    return Math.pow(10, -do_10mm) * 100.0;
   });
 }
 
-/**
- * Transmittance (%) → XYZ tristimulus (CIE 1964 10°, D65)
- */
 function T_to_XYZ(T_arr) {
   const T_frac = T_arr.map(t => t / 100.0);
   const K      = 100.0 / dot(S_D65, y_bar_10);
@@ -707,9 +697,6 @@ function T_to_XYZ(T_arr) {
   return { X, Y, Z };
 }
 
-/**
- * XYZ → L*a*b*
- */
 function XYZ_to_Lab(X, Y, Z) {
   const fx = f_lab(X / Xn);
   const fy = f_lab(Y / Yn);
@@ -721,9 +708,6 @@ function XYZ_to_Lab(X, Y, Z) {
   };
 }
 
-/**
- * Lab → approximate sRGB for colour preview (clamped 0-255)
- */
 function Lab_to_sRGB(L, a, b) {
   const fy = (L + 16) / 116;
   const fx = a / 500 + fy;
@@ -746,8 +730,8 @@ function Lab_to_sRGB(L, a, b) {
 // UI HELPERS
 // ============================================================
 
-let parsedFile = null;   // { headers: [], rows: [{name, DO:[…]}] }
-let results    = [];     // [{name, L, a, b, DO:[…]}]
+let parsedFile = null;
+let results    = [];
 
 const $ = id => document.getElementById(id);
 
@@ -813,9 +797,8 @@ function parseCSV(text) {
   if (lines.length < 2) throw new Error('CSV has fewer than 2 rows.');
 
   const header = lines[0].split(';');
-  const nCols  = header.length - 1; // first col is label
+  const nCols  = header.length - 1;
 
-  // Detect wavelength columns — expect 81 for 380-780 nm step 5
   const wlHeaders = header.slice(1).map(h => parseFloat(h));
   const valid81   = wlHeaders.length === 81
     && Math.abs(wlHeaders[0] - 380) < 1
@@ -831,7 +814,7 @@ function parseCSV(text) {
   for (let i = 1; i < lines.length; i++) {
     const cols = lines[i].split(';');
     const name = cols[0].trim();
-    if (!name.startsWith('DO_')) continue; // skip non-data rows
+    if (!name) continue; // skip rows with empty first column
 
     const DO = cols.slice(1, 82).map(v => parseFloat(v.replace(',', '.')));
     if (DO.length !== 81) throw new Error(`Row "${name}": expected 81 values, got ${DO.length}.`);
@@ -839,7 +822,7 @@ function parseCSV(text) {
     rows.push({ name, DO });
   }
 
-  if (rows.length === 0) throw new Error('No data rows found. Rows must start with "DO_".');
+  if (rows.length === 0) throw new Error('No data rows found. Check your CSV format.');
   return { wlHeaders, rows };
 }
 
@@ -872,7 +855,6 @@ async function processFile() {
 
   const total = parsedFile.rows.length;
 
-  // Use setTimeout slices to keep UI responsive
   for (let i = 0; i < total; i++) {
     const row = parsedFile.rows[i];
     try {
@@ -884,7 +866,6 @@ async function processFile() {
     } catch (e) {
       log(`✘ ${row.name}: ${e.message}`, 'log-err');
     }
-    // update progress
     $('progressFill').style.width = ((i + 1) / total * 100) + '%';
     if (i % 10 === 0) await new Promise(r => setTimeout(r, 0));
   }
@@ -949,7 +930,6 @@ function downloadCSV() {
   const wl = parsedFile.wlHeaders;
   const wlCols = wl.join(';');
 
-  // Header row
   let csv = `Produit;L_star;a_star;b_star;${wlCols}\r\n`;
 
   results.forEach(r => {
