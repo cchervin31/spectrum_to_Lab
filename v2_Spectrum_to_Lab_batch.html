@@ -23,9 +23,7 @@
 --border: #2d3561;
 --border-bright: #3d4a80;
 }
- 
 * { margin: 0; padding: 0; box-sizing: border-box; }
- 
 body {
 font-family: 'JetBrains Mono', monospace;
 background: var(--bg-dark);
@@ -37,12 +35,9 @@ radial-gradient(circle at 85% 70%, rgba(255, 0, 234, 0.08) 0%, transparent 45%),
 radial-gradient(circle at 50% 10%, rgba(0, 255, 159, 0.05) 0%, transparent 40%);
 padding: 20px;
 }
- 
 .container { max-width: 1100px; margin: 0 auto; }
- 
 /* ── HEADER ── */
 header { text-align: center; margin-bottom: 50px; padding-top: 40px; }
- 
 h1 {
 font-family: 'Orbitron', sans-serif;
 font-size: clamp(22px, 4vw, 40px);
@@ -56,19 +51,16 @@ letter-spacing: 2px;
 text-transform: uppercase;
 animation: glow 2.5s ease-in-out infinite alternate;
 }
- 
 @keyframes glow {
 from { filter: drop-shadow(0 0 18px rgba(0, 240, 255, 0.5)); }
 to { filter: drop-shadow(0 0 28px rgba(255, 0, 234, 0.5)); }
 }
- 
 .subtitle {
 font-size: 12px;
 color: var(--text-muted);
 text-transform: uppercase;
 letter-spacing: 3px;
 }
- 
 .norm-badge {
 display: inline-block;
 margin-top: 12px;
@@ -79,7 +71,6 @@ font-size: 11px;
 color: var(--accent);
 letter-spacing: 1px;
 }
- 
 /* ── CARDS ── */
 .card {
 background: var(--bg-card);
@@ -91,9 +82,7 @@ position: relative;
 overflow: hidden;
 transition: border-color 0.3s;
 }
- 
 .card:hover { border-color: var(--border-bright); }
- 
 .card::before {
 content: '';
 position: absolute;
@@ -104,12 +93,10 @@ transform: rotate(45deg);
 animation: shine 5s linear infinite;
 pointer-events: none;
 }
- 
 @keyframes shine {
 0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
 100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
- 
 .card-title {
 font-family: 'Orbitron', sans-serif;
 font-size: 13px;
@@ -122,14 +109,12 @@ display: flex;
 align-items: center;
 gap: 10px;
 }
- 
 .card-title::after {
 content: '';
 flex: 1;
 height: 1px;
 background: linear-gradient(to right, var(--border-bright), transparent);
 }
- 
 /* ── PARAMS GRID ── */
 .params-grid {
 display: grid;
@@ -137,9 +122,7 @@ grid-template-columns: 1fr 1fr;
 gap: 20px;
 margin-bottom: 20px;
 }
- 
 @media (max-width: 600px) { .params-grid { grid-template-columns: 1fr; } }
- 
 .param-block label {
 display: block;
 font-size: 11px;
@@ -148,7 +131,6 @@ text-transform: uppercase;
 letter-spacing: 1.5px;
 margin-bottom: 8px;
 }
- 
 .param-block select,
 .param-block input[type="number"] {
 width: 100%;
@@ -163,19 +145,16 @@ outline: none;
 transition: border-color 0.3s;
 appearance: none;
 }
- 
 .param-block select:focus,
 .param-block input[type="number"]:focus {
 border-color: var(--primary);
 box-shadow: 0 0 0 2px rgba(0,240,255,0.15);
 }
- 
 .param-hint {
 font-size: 11px;
 color: var(--text-muted);
 margin-top: 6px;
 }
- 
 /* ── UPLOAD ZONE ── */
 .upload-zone {
 border: 2px dashed var(--primary);
@@ -187,34 +166,27 @@ transition: all 0.3s ease;
 background: rgba(0,240,255,0.03);
 position: relative;
 }
- 
 .upload-zone:hover {
 border-color: var(--secondary);
 background: rgba(255,0,234,0.05);
 transform: scale(1.01);
 }
- 
 .upload-zone.dragover {
 border-color: var(--success);
 background: rgba(0,255,159,0.08);
 }
- 
 .upload-icon {
 font-size: 44px;
 margin-bottom: 12px;
 animation: float 3s ease-in-out infinite;
 }
- 
 @keyframes float {
 0%, 100% { transform: translateY(0); }
 50% { transform: translateY(-8px); }
 }
- 
 .upload-text { font-size: 15px; margin-bottom: 8px; }
 .upload-hint { font-size: 12px; color: var(--text-muted); }
- 
 input[type="file"] { display: none; }
- 
 .file-selected {
 margin-top: 14px;
 font-size: 12px;
@@ -224,9 +196,7 @@ gap: 6px;
 align-items: center;
 justify-content: center;
 }
- 
 .file-selected.show { display: flex; }
- 
 /* ── INFO BOX ── */
 .info-box {
 background: rgba(0,240,255,0.07);
@@ -238,9 +208,7 @@ font-size: 12px;
 line-height: 1.7;
 color: var(--text-muted);
 }
- 
 .info-box strong { color: var(--primary); display: block; margin-bottom: 4px; }
- 
 /* ── BUTTON ── */
 .btn {
 background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -258,7 +226,6 @@ text-transform: uppercase;
 position: relative;
 overflow: hidden;
 }
- 
 .btn::before {
 content: '';
 position: absolute;
@@ -269,11 +236,9 @@ background: rgba(255,255,255,0.25);
 transform: translate(-50%,-50%);
 transition: width 0.5s, height 0.5s;
 }
- 
 .btn:hover::before { width: 300px; height: 300px; }
 .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,240,255,0.4); }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
- 
 .btn-outline {
 background: transparent;
 border: 2px solid var(--accent);
@@ -288,13 +253,11 @@ cursor: pointer;
 transition: all 0.3s ease;
 text-transform: uppercase;
 }
- 
 .btn-outline:hover {
 background: rgba(0,255,159,0.1);
 box-shadow: 0 0 20px rgba(0,255,159,0.3);
 transform: translateY(-2px);
 }
- 
 /* ── STATS ── */
 .stats-grid {
 display: grid;
@@ -302,7 +265,6 @@ grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 gap: 16px;
 margin-bottom: 24px;
 }
- 
 .stat-card {
 background: var(--bg-card);
 border: 1px solid var(--border);
@@ -311,9 +273,7 @@ padding: 18px;
 text-align: center;
 transition: all 0.3s;
 }
- 
 .stat-card:hover { border-color: var(--primary); transform: translateY(-3px); }
- 
 .stat-value {
 font-family: 'Orbitron', sans-serif;
 font-size: 28px;
@@ -321,20 +281,15 @@ font-weight: 700;
 color: var(--primary);
 margin-bottom: 4px;
 }
- 
 .stat-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
- 
 /* ── TABLE ── */
 .table-wrapper {
 overflow-x: auto;
 border-radius: 12px;
 border: 1px solid var(--border);
 }
- 
 table { width: 100%; border-collapse: collapse; }
- 
 thead { background: linear-gradient(135deg, rgba(0,240,255,0.18), rgba(255,0,234,0.15)); }
- 
 th {
 padding: 13px 14px;
 text-align: left;
@@ -346,23 +301,19 @@ letter-spacing: 1px;
 color: var(--primary);
 white-space: nowrap;
 }
- 
 td {
 padding: 11px 14px;
 border-bottom: 1px solid var(--border);
 font-size: 12px;
 white-space: nowrap;
 }
- 
 td.name-col { color: var(--text-light); font-weight: 600; max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
 td.L-col { color: #fff; }
 td.a-col { color: #ff8fab; }
 td.b-col { color: #a8dadc; }
- 
 tbody tr { transition: background 0.2s; }
 tbody tr:hover { background: rgba(0,240,255,0.05); }
 tbody tr:last-child td { border-bottom: none; }
- 
 /* color swatch */
 .color-swatch {
 width: 22px; height: 22px;
@@ -371,11 +322,9 @@ display: inline-block;
 vertical-align: middle;
 border: 1px solid rgba(255,255,255,0.2);
 }
- 
 /* ── LOADER ── */
 .loader { display: none; text-align: center; padding: 40px; }
 .loader.show { display: block; }
- 
 .spinner {
 width: 48px; height: 48px;
 border: 4px solid var(--border);
@@ -385,9 +334,7 @@ border-radius: 50%;
 animation: spin 0.9s linear infinite;
 margin: 0 auto 18px;
 }
- 
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
- 
 /* ── ERROR ── */
 .error-box {
 background: rgba(255,71,87,0.1);
@@ -400,26 +347,20 @@ font-size: 13px;
 display: none;
 animation: shake 0.4s ease;
 }
- 
 .error-box.show { display: block; }
- 
 @keyframes shake {
 0%,100% { transform: translateX(0); }
 25% { transform: translateX(-8px); }
 75% { transform: translateX(8px); }
 }
- 
 /* ── RESULTS SECTION ── */
 .results-section { display: none; animation: slideIn 0.5s ease-out; }
 .results-section.show { display: block; }
- 
 @keyframes slideIn {
 from { opacity: 0; transform: translateY(18px); }
 to { opacity: 1; transform: translateY(0); }
 }
- 
 .download-row { display: flex; gap: 14px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
- 
 /* ── PROGRESS ── */
 .progress-bar-track {
 background: var(--border);
@@ -428,7 +369,6 @@ height: 6px;
 margin-top: 16px;
 overflow: hidden;
 }
- 
 .progress-bar-fill {
 height: 100%;
 background: linear-gradient(90deg, var(--primary), var(--secondary));
@@ -436,7 +376,6 @@ border-radius: 6px;
 width: 0%;
 transition: width 0.3s ease;
 }
- 
 /* ── LOG ── */
 .log-box {
 background: rgba(0,0,0,0.4);
@@ -450,7 +389,6 @@ overflow-y: auto;
 margin-top: 16px;
 display: none;
 }
- 
 .log-box.show { display: block; }
 .log-entry { padding: 2px 0; }
 .log-ok { color: var(--accent); }
@@ -460,14 +398,12 @@ display: none;
 </head>
 <body>
 <div class="container">
- 
 <!-- HEADER -->
 <header>
 <h1>Spectrum → L*a*b* Converter</h1>
 <p class="subtitle">CIE L*a*b* Batch Processor from Absorbance Spectra</p>
 <span class="norm-badge">OIV-MA-AS2-11 · CIE 1964 10° · Illuminant D65</span>
 </header>
- 
 <!-- PARAMETERS -->
 <div class="card">
 <div class="card-title">⚙ Measurement Parameters</div>
@@ -495,7 +431,6 @@ DO_10mm = DO_corrected × (10 / path_mm)<br>
 T (%) = 10<sup>−DO_10mm</sup> × 100 → XYZ (CIE 1964 10°, D65) → L*a*b*
 </div>
 </div>
- 
 <!-- UPLOAD -->
 <div class="card">
 <div class="card-title">📂 Input File</div>
@@ -514,25 +449,20 @@ Data rows: <code>Sample_name;val1;val2;…;val81</code> — one spectrum per row
 Any row with an empty first column is ignored.
 </div>
 </div>
- 
 <!-- PROCESS BUTTON -->
 <div style="text-align:center; margin-bottom:30px;">
 <button class="btn" id="processBtn" onclick="processFile()" disabled>▶ Calculate L*a*b*</button>
 </div>
- 
 <!-- LOADER -->
 <div class="loader" id="loader">
 <div class="spinner"></div>
 <div>Processing spectra…</div>
 <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill"></div></div>
 </div>
- 
 <!-- LOG -->
 <div class="log-box" id="logBox"></div>
- 
 <!-- RESULTS -->
 <div class="results-section" id="resultsSection">
- 
 <!-- STATS -->
 <div class="stats-grid">
 <div class="stat-card">
@@ -552,7 +482,6 @@ Any row with an empty first column is ignored.
 <div class="stat-label">Mean b*</div>
 </div>
 </div>
- 
 <!-- TABLE -->
 <div class="card" style="padding:0; overflow:hidden;">
 <div class="table-wrapper">
@@ -572,38 +501,44 @@ Any row with an empty first column is ignored.
 </table>
 </div>
 </div>
- 
 <!-- DOWNLOAD -->
 <div class="download-row">
 <button class="btn" onclick="downloadCSV()">⬇ Download Output_Lab_values.csv</button>
 <button class="btn-outline" onclick="resetAll()">↺ New File</button>
 </div>
- 
 </div><!-- /results -->
- 
 </div><!-- /container -->
- 
 <script>
 // ============================================================
 // CIE DATA — D65 illuminant + CIE 1964 10° observer (380-780 nm, Δλ=5)
 // Source: CIE 015:2018, OIV-MA-AS2-11
+//
+// FIX (2024): S_D65 corrected from 645–780 nm.
+// The previous array had erroneous values in the 645–780 nm range
+// (systematically too high by up to 17 units at 760 nm) due to an
+// assembly error. Values now match the CIE standard table exactly.
 // ============================================================
-const S_D65 = [
-50.0, 52.3, 54.6, 68.7, 82.8,
-87.1, 91.5, 92.5, 93.4, 90.1, 86.7, 95.8, 104.9, 110.9, 117.0,
-117.4, 117.8, 116.3, 114.9, 115.4, 115.9, 112.4, 108.8, 109.1, 109.4,
-108.6, 107.8, 106.3, 104.8, 106.2, 107.7, 106.0, 104.4, 104.2, 104.1,
-102.0, 100.0, 98.2, 96.3, 96.1,
-95.8, 92.2, 88.7, 89.3, 90.0, 89.8, 89.6, 88.6, 87.7, 85.5,
-83.3, 83.5, 83.7, 84.3, 84.8, 84.4, 84.0, 83.1, 82.3, 81.2,
-80.2, 80.3, 80.3, 79.4, 78.4, 78.3, 78.1, 76.1, 74.0, 71.6,
-69.2, 68.9, 68.6, 66.9, 65.2, 64.3,
-63.4, 62.4, 61.6, 60.7, 60.0, 59.2, 58.3, 57.4, 56.6, 55.8,
-55.0, 54.2, 53.4, 52.6, 51.8, 51.0, 50.2, 49.4, 48.5, 47.7,
-46.9, 46.2, 45.4, 44.6, 43.9, 43.1, 42.3, 41.6, 40.8, 40.0,
-39.3, 38.5, 37.7, 37.0, 36.2, 35.4, 63.4
-];
  
+// D65 spectral power distribution — 81 values, 380–780 nm, step 5 nm
+const S_D65 = [
+50.0, 52.3, 54.6, 68.7, 82.8, // 380–400
+87.1, 91.5, 92.5, 93.4, 90.1, // 405–425
+86.7, 95.8, 104.9, 110.9, 117.0, // 430–450
+117.4, 117.8, 116.3, 114.9, 115.4, // 455–475
+115.9, 112.4, 108.8, 109.1, 109.4, // 480–500
+108.6, 107.8, 106.3, 104.8, 106.2, // 505–525
+107.7, 106.0, 104.4, 104.2, 104.0, // 530–550
+102.0, 100.0, 98.2, 96.3, 96.1, // 555–575
+95.8, 92.2, 88.7, 89.3, 90.0, // 580–600
+89.8, 89.6, 88.6, 87.7, 85.5, // 605–625
+83.3, 83.5, 83.7, // 630–640 ← correct up to here
+81.9, 80.0, 80.1, 80.2, 81.2, // 645–665 ← CORRECTED
+82.3, 80.3, 78.3, 74.0, 69.7, // 670–690 ← CORRECTED
+70.7, 71.6, 73.0, 74.3, 68.0, // 695–715 ← CORRECTED
+61.6, 65.7, 69.9, 72.5, 75.1, // 720–740 ← CORRECTED
+69.3, 63.6, 55.0, 46.4, 56.6, // 745–765 ← CORRECTED
+66.8, 65.1, 63.4 // 770–780 ← CORRECTED
+];
 const x_bar_10 = [
 0.0002, 0.0007, 0.0024, 0.0072, 0.0191,
 0.0434, 0.0847, 0.1406, 0.2045, 0.2647, 0.3147, 0.3577, 0.3837, 0.3867, 0.3707,
@@ -614,12 +549,8 @@ const x_bar_10 = [
 0.6475, 0.5351, 0.4316, 0.3437, 0.2683, 0.2043, 0.1526, 0.1122, 0.0813, 0.0579,
 0.0409, 0.0286, 0.0199, 0.0138, 0.0096, 0.0066, 0.0046, 0.0031, 0.0022, 0.0015,
 0.0010, 0.0007, 0.0005, 0.0004, 0.0002, 0.0002,
-0.0001, 0.0001, 0.0001, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
-0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
-0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
-0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000
+0.0001, 0.0001, 0.0001, 0.0000, 0.0000
 ];
- 
 const y_bar_10 = [
 0.0000, 0.0001, 0.0003, 0.0008, 0.0020,
 0.0045, 0.0088, 0.0145, 0.0214, 0.0295, 0.0387, 0.0496, 0.0621, 0.0747, 0.0895,
@@ -630,12 +561,8 @@ const y_bar_10 = [
 0.2835, 0.2283, 0.1798, 0.1402, 0.1076, 0.0812, 0.0603, 0.0441, 0.0318, 0.0226,
 0.0159, 0.0111, 0.0077, 0.0054, 0.0037, 0.0026, 0.0018, 0.0012, 0.0008, 0.0006,
 0.0004, 0.0003, 0.0002, 0.0001, 0.0001, 0.0000,
-0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
-0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
-0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
-0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000
+0.0000, 0.0000, 0.0000, 0.0000, 0.0000
 ];
- 
 const z_bar_10 = [
 0.0007, 0.0029, 0.0105, 0.0323, 0.0860,
 0.1971, 0.3894, 0.6568, 0.9725, 1.2825, 1.5535, 1.7985, 1.9673, 2.0273, 1.9948,
@@ -646,39 +573,29 @@ const z_bar_10 = [
 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
-0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
-0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
-0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
-0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000
+0.0000, 0.0000, 0.0000, 0.0000, 0.0000
 ];
  
-// ── CRITICAL: trim all CIE arrays to exactly 81 values (380–780 nm, Δλ=5) ──
-const N_WL = 81;
-S_D65.splice(N_WL);
-x_bar_10.splice(N_WL);
-y_bar_10.splice(N_WL);
-z_bar_10.splice(N_WL);
- 
+// Sanity check — arrays must be exactly 81 values
+if (S_D65.length !== 81 || x_bar_10.length !== 81 || y_bar_10.length !== 81 || z_bar_10.length !== 81) {
+console.error('CIE array length error!', S_D65.length, x_bar_10.length, y_bar_10.length, z_bar_10.length);
+}
 // D65 10° reference white (OIV-MA-AS2-11)
 const Xn = 94.825, Yn = 100.000, Zn = 107.381;
- 
 // ============================================================
 // COLORIMETRIC FUNCTIONS
 // ============================================================
- 
 function f_lab(t) {
 const delta = 6 / 29;
 return t > delta * delta * delta
 ? Math.cbrt(t)
 : t / (3 * delta * delta) + 4 / 29;
 }
- 
 function dot(a, b) {
 let s = 0;
 for (let i = 0; i < a.length; i++) s += a[i] * b[i];
 return s;
 }
- 
 function DO_to_T(DO_arr, path_mm, dilution) {
 return DO_arr.map(do_val => {
 const do_corr = do_val * dilution;
@@ -686,7 +603,6 @@ const do_10mm = do_corr * (10.0 / path_mm);
 return Math.pow(10, -do_10mm) * 100.0;
 });
 }
- 
 function T_to_XYZ(T_arr) {
 const T_frac = T_arr.map(t => t / 100.0);
 const K = 100.0 / dot(S_D65, y_bar_10);
@@ -696,7 +612,6 @@ const Y = K * dot(sdx, y_bar_10);
 const Z = K * dot(sdx, z_bar_10);
 return { X, Y, Z };
 }
- 
 function XYZ_to_Lab(X, Y, Z) {
 const fx = f_lab(X / Xn);
 const fy = f_lab(Y / Yn);
@@ -707,7 +622,6 @@ a: 500 * (fx - fy),
 b: 200 * (fy - fz)
 };
 }
- 
 function Lab_to_sRGB(L, a, b) {
 const fy = (L + 16) / 116;
 const fx = a / 500 + fy;
@@ -725,16 +639,12 @@ g = Math.round(Math.max(0, Math.min(1, gamma(g))) * 255);
 b = Math.round(Math.max(0, Math.min(1, gamma(bl))) * 255);
 return `rgb(${r},${g},${b})`;
 }
- 
 // ============================================================
 // UI HELPERS
 // ============================================================
- 
 let parsedFile = null;
 let results = [];
- 
 const $ = id => document.getElementById(id);
- 
 function log(msg, cls = '') {
 const box = $('logBox');
 box.classList.add('show');
@@ -744,15 +654,12 @@ div.textContent = msg;
 box.appendChild(div);
 box.scrollTop = box.scrollHeight;
 }
- 
 function showError(msg) {
 const box = $('errorBox');
 box.textContent = '⚠ ' + msg;
 box.classList.add('show');
 }
- 
 function clearError() { $('errorBox').classList.remove('show'); }
- 
 // Drag & drop
 const zone = $('uploadZone');
 zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
@@ -763,17 +670,14 @@ zone.classList.remove('dragover');
 const f = e.dataTransfer.files[0];
 if (f) handleFile(f);
 });
- 
 $('fileInput').addEventListener('change', e => {
 if (e.target.files[0]) handleFile(e.target.files[0]);
 });
- 
 function handleFile(file) {
 clearError();
 $('fileSelected').classList.remove('show');
 $('processBtn').disabled = true;
 parsedFile = null;
- 
 const reader = new FileReader();
 reader.onload = evt => {
 try {
@@ -787,52 +691,41 @@ showError(err.message);
 };
 reader.readAsText(file);
 }
- 
 // ============================================================
 // CSV PARSER
 // ============================================================
- 
 function parseCSV(text) {
 const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
 if (lines.length < 2) throw new Error('CSV has fewer than 2 rows.');
- 
 const header = lines[0].split(';');
 const nCols = header.length - 1;
- 
 const wlHeaders = header.slice(1).map(h => parseFloat(h));
 const valid81 = wlHeaders.length === 81
 && Math.abs(wlHeaders[0] - 380) < 1
 && Math.abs(wlHeaders[80] - 780) < 1;
- 
 if (!valid81) {
 throw new Error(
 `Expected 81 wavelength columns (380–780 nm, step 5 nm). Found ${wlHeaders.length} columns starting at ${wlHeaders[0]} nm.`
 );
 }
- 
 const rows = [];
 for (let i = 1; i < lines.length; i++) {
 const cols = lines[i].split(';');
 const name = cols[0].trim();
 if (!name) continue; // skip rows with empty first column
- 
 const DO = cols.slice(1, 82).map(v => parseFloat(v.replace(',', '.')));
 if (DO.length !== 81) throw new Error(`Row "${name}": expected 81 values, got ${DO.length}.`);
 if (DO.some(isNaN)) throw new Error(`Row "${name}": contains non-numeric values.`);
 rows.push({ name, DO });
 }
- 
 if (rows.length === 0) throw new Error('No data rows found. Check your CSV format.');
 return { wlHeaders, rows };
 }
- 
 // ============================================================
 // PROCESS
 // ============================================================
- 
 async function processFile() {
 if (!parsedFile) return;
- 
 clearError();
 $('resultsSection').classList.remove('show');
 $('logBox').innerHTML = '';
@@ -840,21 +733,16 @@ $('logBox').classList.remove('show');
 $('loader').classList.add('show');
 $('processBtn').disabled = true;
 results = [];
- 
 const path_mm = parseFloat($('opticalPath').value);
 const dilution = parseFloat($('dilutionFactor').value);
- 
 if (isNaN(dilution) || dilution < 1) {
 showError('Dilution factor must be ≥ 1.');
 $('loader').classList.remove('show');
 $('processBtn').disabled = false;
 return;
 }
- 
 log(`▶ Processing ${parsedFile.rows.length} spectra — path: ${path_mm} mm, dilution: ×${dilution}`);
- 
 const total = parsedFile.rows.length;
- 
 for (let i = 0; i < total; i++) {
 const row = parsedFile.rows[i];
 try {
@@ -869,41 +757,32 @@ log(`✘ ${row.name}: ${e.message}`, 'log-err');
 $('progressFill').style.width = ((i + 1) / total * 100) + '%';
 if (i % 10 === 0) await new Promise(r => setTimeout(r, 0));
 }
- 
 $('loader').classList.remove('show');
 $('processBtn').disabled = false;
- 
 if (results.length === 0) {
 showError('No spectra could be processed. Check the log for details.');
 return;
 }
- 
 renderResults();
 }
- 
 // ============================================================
 // RENDER RESULTS
 // ============================================================
- 
 function renderResults() {
 const n = results.length;
 const avgL = results.reduce((s,r) => s+r.L, 0) / n;
 const avgA = results.reduce((s,r) => s+r.a, 0) / n;
 const avgB = results.reduce((s,r) => s+r.b, 0) / n;
- 
 $('statCount').textContent = n;
 $('statAvgL').textContent = avgL.toFixed(1);
 $('statAvgA').textContent = avgA.toFixed(1);
 $('statAvgB').textContent = avgB.toFixed(1);
- 
 const tbody = $('resultsBody');
 tbody.innerHTML = '';
- 
 results.forEach(r => {
 const chroma = Math.sqrt(r.a * r.a + r.b * r.b);
 const hue = (Math.atan2(r.b, r.a) * 180 / Math.PI + 360) % 360;
 const color = Lab_to_sRGB(r.L, r.a, r.b);
- 
 const tr = document.createElement('tr');
 tr.innerHTML = `
 <td class="name-col">${r.name}</td>
@@ -916,30 +795,23 @@ tr.innerHTML = `
 `;
 tbody.appendChild(tr);
 });
- 
 $('resultsSection').classList.add('show');
 }
- 
 // ============================================================
 // DOWNLOAD CSV
 // ============================================================
- 
 function downloadCSV() {
 if (results.length === 0) return;
- 
 const wl = parsedFile.wlHeaders;
 const wlCols = wl.join(';');
- 
 // Header: colorimetric columns first, then spectrum wavelengths
 let csv = `Produit;L_star;a_star;b_star;C_star;h_deg;${wlCols}\r\n`;
- 
 results.forEach(r => {
 const chroma = Math.sqrt(r.a * r.a + r.b * r.b);
 const hue = (Math.atan2(r.b, r.a) * 180 / Math.PI + 360) % 360;
 const doCols = r.DO.join(';');
 csv += `${r.name};${r.L.toFixed(4)};${r.a.toFixed(4)};${r.b.toFixed(4)};${chroma.toFixed(4)};${hue.toFixed(4)};${doCols}\r\n`;
 });
- 
 const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
 const url = URL.createObjectURL(blob);
 const a = document.createElement('a');
@@ -950,11 +822,9 @@ a.click();
 document.body.removeChild(a);
 URL.revokeObjectURL(url);
 }
- 
 // ============================================================
 // RESET
 // ============================================================
- 
 function resetAll() {
 parsedFile = null;
 results = [];
@@ -970,4 +840,5 @@ clearError();
 </script>
 </body>
 </html>
+
 
