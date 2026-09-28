@@ -155,6 +155,26 @@ font-size: 11px;
 color: var(--text-muted);
 margin-top: 6px;
 }
+/* ── NORMALIZATION CHECKBOX ── */
+.param-block label.checkbox-row {
+display: flex;
+align-items: center;
+gap: 8px;
+margin-top: 12px;
+margin-bottom: 0;
+text-transform: none;
+letter-spacing: 0;
+font-size: 12px;
+color: var(--text-light);
+cursor: pointer;
+}
+.checkbox-row input {
+accent-color: var(--primary);
+width: 16px;
+height: 16px;
+cursor: pointer;
+flex-shrink: 0;
+}
 /* ── UPLOAD ZONE ── */
 .upload-zone {
 border: 2px dashed var(--primary);
@@ -416,7 +436,11 @@ display: none;
 <option value="2">2 mm</option>
 <option value="1" selected>1 mm — concentrated red wines</option>
 </select>
-<p class="param-hint">Will be normalised to 10 mm reference (OIV)</p>
+<p class="param-hint" id="pathHint">Will be normalised to 10 mm reference (OIV)</p>
+<label class="checkbox-row">
+<input type="checkbox" id="noNormalize">
+<span>Do not normalise to 10 mm (use actual path length)</span>
+</label>
 </div>
 <div class="param-block">
 <label>Dilution Factor</label>
@@ -428,7 +452,9 @@ display: none;
 <strong>How parameters are applied</strong>
 DO_corrected = DO_measured × dilution_factor<br>
 DO_10mm = DO_corrected × (10 / path_mm)<br>
-T (%) = 10<sup>−DO_10mm</sup> × 100 → XYZ (CIE 1964 10°, D65) → L*a*b*
+T (%) = 10<sup>−DO_10mm</sup> × 100 → XYZ (CIE 1964 10°, D65) → L*a*b*<br>
+If “Do not normalise to 10 mm” is ticked, DO_10mm is replaced by DO_corrected
+(L*a*b* is then calculated for the actual path length of the cuvette).
 </div>
 </div>
 <!-- UPLOAD -->
@@ -503,7 +529,7 @@ Any row with an empty first column is ignored.
 </div>
 <!-- DOWNLOAD -->
 <div class="download-row">
-<button class="btn" onclick="downloadCSV()">⬇ Download Output_Lab_values.csv</button>
+<button class="btn" id="downloadBtn" onclick="downloadCSV()">⬇ Download Output_Lab_values.csv</button>
 <button class="btn-outline" onclick="resetAll()">↺ New File</button>
 </div>
 </div><!-- /results -->
@@ -596,11 +622,13 @@ let s = 0;
 for (let i = 0; i < a.length; i++) s += a[i] * b[i];
 return s;
 }
-function DO_to_T(DO_arr, path_mm, dilution) {
+// normalize = true  → OIV normalization to a 10 mm optical path (default, box unticked)
+// normalize = false → calculation for the actual path length (box ticked)
+function DO_to_T(DO_arr, path_mm, dilution, normalize) {
 return DO_arr.map(do_val => {
 const do_corr = do_val * dilution;
-const do_10mm = do_corr * (10.0 / path_mm);
-return Math.pow(10, -do_10mm) * 100.0;
+const do_final = normalize ? do_corr * (10.0 / path_mm) : do_corr;
+return Math.pow(10, -do_final) * 100.0;
 });
 }
 function T_to_XYZ(T_arr) {
@@ -644,6 +672,7 @@ return `rgb(${r},${g},${b})`;
 // ============================================================
 let parsedFile = null;
 let results = [];
+let lastNormalize = true; // normalization mode used for the last calculation
 const $ = id => document.getElementById(id);
 function log(msg, cls = '') {
 const box = $('logBox');
@@ -660,6 +689,10 @@ box.textContent = '⚠ ' + msg;
 box.classList.add('show');
 }
 function clearError() { $('errorBox').classList.remove('show'); }
+// Output file name depends on the normalization mode
+function outputFileName(normalize) {
+return normalize ? 'Output_Lab_values_OIV_10mm.csv' : 'Output_Lab_values_actual_path.csv';
+}
 // Drag & drop
 const zone = $('uploadZone');
 zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
@@ -672,6 +705,12 @@ if (f) handleFile(f);
 });
 $('fileInput').addEventListener('change', e => {
 if (e.target.files[0]) handleFile(e.target.files[0]);
+});
+// Normalization checkbox: update the hint text live
+$('noNormalize').addEventListener('change', e => {
+$('pathHint').textContent = e.target.checked
+? 'No normalisation: L*a*b* calculated for the actual path length'
+: 'Will be normalised to 10 mm reference (OIV)';
 });
 function handleFile(file) {
 clearError();
@@ -735,18 +774,21 @@ $('processBtn').disabled = true;
 results = [];
 const path_mm = parseFloat($('opticalPath').value);
 const dilution = parseFloat($('dilutionFactor').value);
+const normalize = !$('noNormalize').checked; // unticked = OIV normalization
+lastNormalize = normalize;
 if (isNaN(dilution) || dilution < 1) {
 showError('Dilution factor must be ≥ 1.');
 $('loader').classList.remove('show');
 $('processBtn').disabled = false;
 return;
 }
-log(`▶ Processing ${parsedFile.rows.length} spectra — path: ${path_mm} mm, dilution: ×${dilution}`);
+log(`▶ Processing ${parsedFile.rows.length} spectra — path: ${path_mm} mm, dilution: ×${dilution}, ` +
+(normalize ? 'normalised to 10 mm (OIV)' : 'NOT normalised (actual path length)'));
 const total = parsedFile.rows.length;
 for (let i = 0; i < total; i++) {
 const row = parsedFile.rows[i];
 try {
-const T = DO_to_T(row.DO, path_mm, dilution);
+const T = DO_to_T(row.DO, path_mm, dilution, normalize);
 const xyz = T_to_XYZ(T);
 const lab = XYZ_to_Lab(xyz.X, xyz.Y, xyz.Z);
 results.push({ name: row.name, L: lab.L, a: lab.a, b: lab.b, DO: row.DO });
@@ -795,6 +837,7 @@ tr.innerHTML = `
 `;
 tbody.appendChild(tr);
 });
+$('downloadBtn').textContent = '⬇ Download ' + outputFileName(lastNormalize);
 $('resultsSection').classList.add('show');
 }
 // ============================================================
@@ -816,7 +859,7 @@ const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
 const url = URL.createObjectURL(blob);
 const a = document.createElement('a');
 a.href = url;
-a.download = 'Output_Lab_values.csv';
+a.download = outputFileName(lastNormalize);
 document.body.appendChild(a);
 a.click();
 document.body.removeChild(a);
@@ -844,5 +887,3 @@ clearError();
 
 </body>
 </html>
-
-
